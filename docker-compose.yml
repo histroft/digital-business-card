@@ -1,0 +1,37 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: digital_card
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d digital_card"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  api:
+    build:
+      context: .
+    ports:
+      - "3000:3000"
+    environment:
+      DATABASE_URL: "postgresql://postgres:postgres@postgres:5432/digital_card?schema=public"
+      PORT: "3000"
+      DEMO_MODE: "false"
+      PROFILE_NAME: "${PROFILE_NAME:-Лаптев Тимофей Сергеевич}"
+      PROFILE_DESCRIPTION: "${PROFILE_DESCRIPTION:-Python-разработчик с коммерческим проектным опытом разработки веб-приложений, API и инструментов автоматизации.}"
+      GITHUB_PROJECT_URL: "${GITHUB_PROJECT_URL:-https://github.com/histroft/mdf_site}"
+      CONTACT_EMAIL: "${CONTACT_EMAIL:-laptevtims@gmail.com}"
+      EXPERIENCE_COMPANY: "${EXPERIENCE_COMPANY:-Компания ТОРЭКС}"
+      EXPERIENCE_POSITION: "${EXPERIENCE_POSITION:-Python-разработчик}"
+      EXPERIENCE_PERIOD: "${EXPERIENCE_PERIOD:-Февраль 2026 — Сентябрь 2026}"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+volumes:
+  postgres_data:

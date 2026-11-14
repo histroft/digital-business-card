@@ -1,0 +1,17 @@
+{
+  "version": 2,
+  "env": {
+    "DEMO_MODE": "true"
+  },
+  "functions": {
+    "api/index.ts": {
+      "maxDuration": 10
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/api"
+    }
+  ]
+}

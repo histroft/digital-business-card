@@ -1,0 +1,83 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Profile {
+  id                String             @id @default(cuid())
+  slug              String             @unique
+  name              String
+  description       String
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
+  professionalLinks ProfessionalLink[]
+  skills            Skill[]
+  experiences       Experience[]
+  projects          Project[]
+}
+
+model ProfessionalLink {
+  id        String   @id @default(cuid())
+  profileId String
+  label     String
+  url       String
+  sortOrder Int      @default(0)
+  profile   Profile  @relation(fields: [profileId], references: [id], onDelete: Cascade)
+
+  @@unique([profileId, label])
+  @@index([profileId, sortOrder])
+}
+
+model Skill {
+  id        String   @id @default(cuid())
+  profileId String
+  name      String
+  category  String?
+  sortOrder Int      @default(0)
+  profile   Profile  @relation(fields: [profileId], references: [id], onDelete: Cascade)
+
+  @@unique([profileId, name])
+  @@index([profileId, sortOrder])
+}
+
+model Experience {
+  id        String        @id @default(cuid())
+  profileId String
+  company   String
+  position  String
+  period    String
+  sortOrder Int           @default(0)
+  profile   Profile       @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  achievements Achievement[]
+
+  @@unique([profileId, sortOrder])
+  @@index([profileId, sortOrder])
+}
+
+model Achievement {
+  id           String     @id @default(cuid())
+  experienceId String
+  description  String
+  sortOrder    Int        @default(0)
+  experience   Experience @relation(fields: [experienceId], references: [id], onDelete: Cascade)
+
+  @@unique([experienceId, sortOrder])
+  @@index([experienceId, sortOrder])
+}
+
+model Project {
+  id          String   @id @default(cuid())
+  profileId   String
+  name        String
+  url         String
+  description String?
+  sortOrder   Int      @default(0)
+  profile     Profile  @relation(fields: [profileId], references: [id], onDelete: Cascade)
+
+  @@unique([profileId, name])
+  @@index([profileId, sortOrder])
+}

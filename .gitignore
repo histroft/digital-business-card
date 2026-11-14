@@ -1,0 +1,13 @@
+node_modules
+dist
+.env
+.env.*
+!.env.example
+coverage
+*.log
+*.tsbuildinfo
+schema.gql
+postgres_data
+prisma/seed.js
+prisma/seed.js.map
+prisma/seed.d.ts
