@@ -19,7 +19,7 @@ async function getServer(): Promise<ExpressHandler> {
   return serverPromise;
 }
 
-/** Vercel serverless entry point. */
+/** Vercel catch-all serverless entry point. */
 export default async function handler(request: Request, response: Response): Promise<void> {
   // Rewrites route Vercel's /api/* function back to Nest's public paths.
   if (request.url?.startsWith('/api/')) request.url = request.url.slice(4) || '/';

@@ -40,7 +40,7 @@ npm run start:dev
 
 ### Публикация на Vercel
 
-Репозиторий содержит serverless entry point `api/index.ts` и `vercel.json`. Публичная версия запускается с `DEMO_MODE=true`, поэтому не требует размещённой базы данных и позволяет работодателю сразу проверить GraphQL Sandbox.
+Репозиторий содержит serverless entry point `api/[[...path]].ts` и `vercel.json`. Публичная версия запускается с `DEMO_MODE=true`, поэтому не требует размещённой базы данных и позволяет работодателю сразу проверить GraphQL Sandbox.
 
 ```powershell
 npx vercel login
