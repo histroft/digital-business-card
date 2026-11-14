@@ -49,6 +49,8 @@ npx vercel --prod
 
 Vercel выдаст публичный URL. В production-варианте с PostgreSQL добавьте `DATABASE_URL` и установите `DEMO_MODE=false` в настройках проекта Vercel.
 
+Корневой URL Vercel перенаправляет на `/graphql` с Apollo Sandbox.
+
 ## Проверка GraphQL
 
 Откройте `http://localhost:3000/graphql` и выполните:

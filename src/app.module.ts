@@ -7,8 +7,10 @@ import { PrismaModule } from './prisma/prisma.module';
 import { PrismaService } from './prisma/prisma.service';
 import { ProfileModule } from './profile/profile.module';
 import { createLoaders } from './profile/loaders/profile.loaders';
+import { AppController } from './app.controller';
 
 @Module({
+  controllers: [AppController],
   imports: [
     PrismaModule,
     GraphQLModule.forRootAsync<ApolloDriverConfig>({
